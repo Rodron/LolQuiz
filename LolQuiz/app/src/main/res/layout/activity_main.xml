@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/optionsButton"
         android:layout_width="281dp"
         android:layout_height="71dp"
         android:text="Opciones"
@@ -18,10 +18,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/rankingButton"
+        android:onClick="onClickOptionsActivity" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/rankingButton"
         android:layout_width="281dp"
         android:layout_height="71dp"
         android:text="Ranking"
@@ -30,20 +31,22 @@
         app:backgroundTintMode="add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="220dp" />
+        tools:layout_editor_absoluteY="220dp"
+        android:onClick="onClickRankingButton"/>
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/newGameButton"
         android:layout_width="281dp"
         android:layout_height="71dp"
         android:text="Nuevo Juego"
         android:textColor="#000000"
         app:backgroundTint="#FAE634"
         app:backgroundTintMode="add"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/optionsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/rankingButton"
+        android:onClick="onClickNewGameButton"/>
 
     <TextView
         android:id="@+id/textView2"
