@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    Button optionsButton =  (Button)  findViewById(R.id.optionsButton);
+    /*Button optionsButton =  (Button)  findViewById(R.id.optionsButton);
     Button newGameButton  = (Button)  findViewById(R.id.newGameButton);
     Button rankingButton = (Button)  findViewById(R.id.rankingButton);
 
@@ -39,5 +39,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RankingActivity.class);
         startActivity(intent);
 
-    }
+    }*/
 }

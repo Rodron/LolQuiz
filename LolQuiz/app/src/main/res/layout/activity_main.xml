@@ -7,6 +7,57 @@
     android:background="#165F98"
     tools:context=".MainActivity">
 
+    <View
+        android:id="@+id/logoBackground"
+        android:layout_width="237dp"
+        android:layout_height="170dp"
+        android:background="#224163"
+        app:backgroundTint="#EAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="28dp" />
+
+    <TextView
+        android:id="@+id/logo"
+        android:layout_width="219dp"
+        android:layout_height="162dp"
+        android:fontFamily="@font/friz_quadrata_bold"
+        android:text="LOL QUIZ"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#ECBA25"
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="28dp" />
+
+    <Button
+        android:id="@+id/newGameButton"
+        android:layout_width="281dp"
+        android:layout_height="71dp"
+        android:onClick="onClickNewGameButton"
+        android:text="Nuevo Juego"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:backgroundTintMode="add"
+        app:layout_constraintBottom_toTopOf="@+id/optionsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rankingButton" />
+
+    <Button
+        android:id="@+id/rankingButton"
+        android:layout_width="281dp"
+        android:layout_height="71dp"
+        android:onClick="onClickRankingButton"
+        android:text="Ranking"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:backgroundTintMode="add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="220dp" />
+
     <Button
         android:id="@+id/optionsButton"
         android:layout_width="281dp"
@@ -20,46 +71,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rankingButton"
         android:onClick="onClickOptionsActivity" />
-
-    <Button
-        android:id="@+id/rankingButton"
-        android:layout_width="281dp"
-        android:layout_height="71dp"
-        android:text="Ranking"
-        android:textColor="#000000"
-        app:backgroundTint="#FAE634"
-        app:backgroundTintMode="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="220dp"
-        android:onClick="onClickRankingButton"/>
-
-    <Button
-        android:id="@+id/newGameButton"
-        android:layout_width="281dp"
-        android:layout_height="71dp"
-        android:text="Nuevo Juego"
-        android:textColor="#000000"
-        app:backgroundTint="#FAE634"
-        app:backgroundTintMode="add"
-        app:layout_constraintBottom_toTopOf="@+id/optionsButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rankingButton"
-        android:onClick="onClickNewGameButton"/>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="219dp"
-        android:layout_height="162dp"
-        android:fontFamily="@font/friz_quadrata_bold"
-        android:text="LOL QUIZ"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#ECBA25"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="28dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

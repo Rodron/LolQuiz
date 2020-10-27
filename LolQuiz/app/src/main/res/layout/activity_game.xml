@@ -9,58 +9,118 @@
     tools:context=".GameActivity">
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/categoryBackground"
         android:layout_width="396dp"
         android:layout_height="53dp"
-        android:background="#82F32F "
+        android:background="#93DA5F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="6dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/category"
+        android:layout_width="244dp"
+        android:layout_height="25dp"
+        android:fontFamily="@font/friz_quadrata_bold"
+        android:text="Category"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.074"
+        app:layout_constraintStart_toEndOf="@+id/back"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <View
+        android:id="@+id/questionBackground"
+        android:layout_width="363dp"
+        android:layout_height="118dp"
+        android:background="#224163"
+        app:backgroundTint="#EAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <View
+        android:id="@+id/questionBackgroundBorder"
+        android:layout_width="363dp"
+        android:layout_height="118dp"
+        android:background="@drawable/border"
+        app:backgroundTint="#EAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <TextView
+        android:id="@+id/question"
         android:layout_width="347dp"
         android:layout_height="104dp"
         android:fontFamily="@font/friz_quadrata_bold"
         android:text="A fecha de 24/10/2020 ¿cuál de estos campeones tiene un mayor cooldown en su ultimate al nivel 6 (sin aplicar items o runas de CDR)?"
         android:textAlignment="center"
+        android:textColor="#DDDDDD"
+        android:textColorLink="#000000"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="31dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="113dp" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="211dp"
-        android:layout_height="46dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/button5"
-        tools:layout_editor_absoluteX="100dp" />
+        android:id="@+id/option1"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 1"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toTopOf="@+id/option2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="211dp"
-        android:layout_height="46dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        tools:layout_editor_absoluteX="100dp" />
+        android:id="@+id/option2"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 2"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toTopOf="@+id/option3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option1" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="211dp"
-        android:layout_height="46dp"
-        android:text="Button"
+        android:id="@+id/option3"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 3"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toTopOf="@+id/option4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option2" />
+
+    <Button
+        android:id="@+id/option4"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 4"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
-        tools:layout_editor_absoluteX="100dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option3" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="211dp"
-        android:layout_height="46dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="100dp" />
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="61dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="@+id/categoryBackground"
+        app:srcCompat="@drawable/abc_vector_test"
+        tools:layout_editor_absoluteY="9dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
