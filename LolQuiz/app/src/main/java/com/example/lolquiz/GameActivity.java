@@ -19,22 +19,27 @@ public class GameActivity extends AppCompatActivity {
         InputStream is = getResources().openRawResource(R.raw.preguntas);
         ArrayList<String[]> questions = new ArrayList<String[]>();
 
-        try {
+        try{
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
-            String aux[] = new String[6];
+            List<String> aux = new ArrayList<String>();
+            
             for (int i = 0; (line = br.readLine()) != null; i++) {
-                aux[i%6] = line;
                 if(i%6 == 0 && i/6>0){
-                    questions.add(aux);
+                    questions.add(new ArrayList<>(aux));
+                    aux.clear();                    
                 }
+                aux.add(line);
             }
+            
+            questions.add(new ArrayList<>(aux));
+            aux.clear();
+            
             br.close();
         }
-        catch (IOException e) {
+	catch (IOException e) {
             //You'll need to add proper error handling here
         }
-
     }
 
 
