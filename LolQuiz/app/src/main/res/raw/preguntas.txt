@@ -1,58 +1,68 @@
 C
+0
 ¿Cuál de estas habilidades no pertenece a Vel'Koz?
 Rayo de la Muerte
 Grieta del vacío
 Fisión de Plasma
 Perturbación tectónica
 C
+1
 ¿Cuál de estos campeones es más antiguo?
 Veigar
 Kassadin
 Dr. Mundo
 Lux
 C
+0
 A fecha de 24/10/2020 ¿cuál de estos campeones tiene un mayor cooldown en su ultimate al nivel 6 (sin aplicar items o runas de CDR)?
 Ryze
 Karthus
 Twisted Fate
 Shen
 C
+0
 A fecha de 24/10/2020 ¿cuál de estos campeones cuenta con el mayor número de skins?
 Ezreal
 Ornn
 Miss Fortune
 Lux
 C
+1
 ¿Cuál de estas habilidades inmoviliza al campeón enemigo durante más tiempo (todas las habilidades están a nivel 1)?
 Burbuja Dormilona (Zoe)
 Hechizo Oscuro(Morgana)
 Llamarada Solar(Leona)
 Cadenas Etéreas(LeBlanc)
 L
+2
 ¿Qué personaje no proviene de Zaun?
 Ziggs
 Dr. Mundo
 Singed
 Viktor
 L
+1
 ¿Cuál de estos personajes no es un darkin?
 Diana
 Kayn (Rhaast)
 Varus
 Aatrox
 L
+0
 ¿Cuál de estos personajes no pertenece a la Orden Kinkou?
 Yasuo
 Akali
 Kennen
 Shen
 L
+0
 ¿Cuál de estos pares de personajes son hermanos?
 Lux y Garen
 Xayah y Rakan
 Sylas y Ezreal
 Teemo y Corki
 L
+0
 ¿Quién es el mentor/la mentora de Wukong?
 Maestro Yi
 Lee Sin
