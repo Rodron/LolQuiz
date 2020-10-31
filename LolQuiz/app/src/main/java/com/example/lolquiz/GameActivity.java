@@ -2,6 +2,7 @@ package com.example.lolquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
@@ -25,9 +26,8 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
-    private  int questionCounter = 1;
+    private  int questionCounter = 0;
     private  int correctCounter = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,6 @@ public class GameActivity extends AppCompatActivity {
                 if(checkAnswer(v)){
                     alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
                 }
-
             }
         });
 
@@ -129,29 +128,42 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     public int questionGenerator(List<Integer> alreadyUsed, List<List<String>> questions, List<Button> options, TextView questionBox, TextView category, View categoryBackground){
         Random random = new Random();
         int questionTitle = random.nextInt(10);
         while(alreadyUsed.contains(questionTitle)){
             questionTitle = random.nextInt(10);
         }
+
         questionBox.setText(questions.get(questionTitle).get(2));
-        options.get(0).setText(questions.get(questionTitle).get(3));
-        options.get(0).setTag(0);
-        options.get(1).setText(questions.get(questionTitle).get(4));
-        options.get(1).setTag(1);
-        options.get(2).setText(questions.get(questionTitle).get(5));
-        options.get(2).setTag(1);
-        options.get(3).setText(questions.get(questionTitle).get(6));
-        options.get(3).setTag(1);
+
+        int buttonIndex = random.nextInt(4);
+        ArrayList<Integer> usedButtons = new ArrayList<Integer>();
+
+        usedButtons.add(buttonIndex);
+
+        options.get(buttonIndex).setText(questions.get(questionTitle).get(3));
+        options.get(buttonIndex).setTag(0);
+
+        while(usedButtons.size() != 4) {
+            while (usedButtons.contains(buttonIndex)) {
+                buttonIndex = random.nextInt(4);
+            }
+            usedButtons.add(buttonIndex);
+
+            options.get(buttonIndex).setText(questions.get(questionTitle).get(2 + usedButtons.size()));
+            options.get(buttonIndex).setTag(1);
+        }
+
         switch(questions.get(questionTitle).get(0)){
             case "C":
-                category.setText("Campeones");
+                category.setText("Campeones y habilidades");
                 categoryBackground.setBackgroundColor(Color.parseColor("#C62B38"));
                 break;
             case "L" :
                 category.setText("Lore del juego");
-                categoryBackground.setBackgroundColor(Color.parseColor("#70D624"));
+                categoryBackground.setBackgroundColor(Color.parseColor("#60BA1D"));
                 break;
         }
 
