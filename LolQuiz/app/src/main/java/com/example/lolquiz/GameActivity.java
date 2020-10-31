@@ -2,10 +2,14 @@ package com.example.lolquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,25 +25,39 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
+    private  int questionCounter = 1;
+    private  int correctCounter = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         InputStream is = getResources().openRawResource(R.raw.preguntas);
-        List<List<String>> questions = new ArrayList<>();
-        List<Integer> alreadyUsed = new ArrayList<>();
 
         TextView questionBox = (TextView) findViewById(R.id.question);
-
+         List<List<String>> questions = new ArrayList<>();
+         List<Integer> alreadyUsed = new ArrayList<>();
         List<Button> options = new ArrayList<>();
 
+        TextView category = (TextView) findViewById(R.id.category);
+        View categoryBackground = findViewById(R.id.categoryBackground);
+
+        ImageButton back = (ImageButton) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
         Button option1 =  (Button)  findViewById(R.id.option1);
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(v);
-                alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox));
+                if(checkAnswer(v)){
+                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
+                }
+
             }
         });
 
@@ -47,8 +65,10 @@ public class GameActivity extends AppCompatActivity {
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(v);
-                alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox));
+                if(checkAnswer(v)){
+                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
+                }
+
             }
         });
 
@@ -56,19 +76,23 @@ public class GameActivity extends AppCompatActivity {
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(v);
-                alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox));
+                if(checkAnswer(v)){
+                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
+                }
             }
         });
 
         Button option4 =  (Button)  findViewById(R.id.option4);
+
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(v);
-                alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox));
+                if(checkAnswer(v)){
+                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
+                }
             }
         });
+
 
 
         options.add(option1);
@@ -101,10 +125,11 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
-        alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox));
+        alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
+
     }
 
-    public int questionGenerator(List<Integer> alreadyUsed, List<List<String>> questions, List<Button> options, TextView questionBox){
+    public int questionGenerator(List<Integer> alreadyUsed, List<List<String>> questions, List<Button> options, TextView questionBox, TextView category, View categoryBackground){
         Random random = new Random();
         int questionTitle = random.nextInt(10);
         while(alreadyUsed.contains(questionTitle)){
@@ -119,17 +144,38 @@ public class GameActivity extends AppCompatActivity {
         options.get(2).setTag(1);
         options.get(3).setText(questions.get(questionTitle).get(6));
         options.get(3).setTag(1);
+        switch(questions.get(questionTitle).get(0)){
+            case "C":
+                category.setText("Campeones");
+                categoryBackground.setBackgroundColor(Color.parseColor("#C62B38"));
+                break;
+            case "L" :
+                category.setText("Lore del juego");
+                categoryBackground.setBackgroundColor(Color.parseColor("#70D624"));
+                break;
+        }
+
+
+
         return questionTitle;
 
 
     }
 
-    public void checkAnswer(View v){
+    public boolean checkAnswer(View v){
+        questionCounter ++;
         if (v.getTag().equals(0)){
-            Toast.makeText(this, "Es correcta",Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Es incorrecta",Toast.LENGTH_SHORT).show();
+            correctCounter ++;
         }
+        if(questionCounter == 10){
+            Intent intent = new Intent(this, RankingActivity.class);
+            intent.putExtra("questionCounter",questionCounter);
+            intent.putExtra("correctCounter",correctCounter);
+            startActivity(intent);
+            return false;
+        }
+
+        return true;
     }
 
 }
