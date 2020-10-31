@@ -4,6 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#165F98"
     tools:context=".RankingActivity">
 
+    <Button
+        android:id="@+id/playAgain"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="28dp"
+        android:text="Volver a jugar"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/backToMenu"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="26dp"
+        android:text="Volver al menú principal"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playAgain"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionBackground3"
+        app:srcCompat="@drawable/amumu" />
+
+    <View
+        android:id="@+id/questionBackground3"
+        android:layout_width="363dp"
+        android:layout_height="90dp"
+        android:background="#224163"
+        app:backgroundTint="#EAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/questionBackgroundBorder3" />
+
+    <View
+        android:id="@+id/questionBackgroundBorder3"
+        android:layout_width="360dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/border"
+        app:backgroundTint="#EAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/question3"
+        android:layout_width="349dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/border"
+        android:fontFamily="@font/friz_quadrata_bold"
+        android:text="Has acertado 3 de 10 preguntas."
+        android:textAlignment="center"
+        android:textColor="#DDDDDD"
+        android:textColorLink="#000000"
+        android:textSize="27sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/questionBackgroundBorder3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
