@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#165F98"
+    android:fadingEdgeLength="@dimen/material_emphasis_high_type"
+    tools:context=".StandardQuestionFragment">
+
+    <View
+        android:id="@+id/questionBackground"
+        android:layout_width="363dp"
+        android:layout_height="118dp"
+        android:background="#224163"
+        app:backgroundTint="#EAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/questionBackgroundBorder" />
+
+    <View
+        android:id="@+id/questionBackgroundBorder"
+        android:layout_width="363dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="92dp"
+        android:background="@drawable/border"
+        app:backgroundTint="#EAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="347dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/border"
+        android:fontFamily="@font/friz_quadrata_bold"
+        android:text="A fecha de 24/10/2020 ¿cuál de estos campeones tiene un mayor cooldown en su ultimate al nivel 6 (sin aplicar items o runas de CDR)?"
+        android:textAlignment="center"
+        android:textColor="#DDDDDD"
+        android:textColorLink="#000000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/questionBackground" />
+
+    <Button
+        android:id="@+id/option1"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 1"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toTopOf="@+id/option2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question"
+        />
+
+    <Button
+        android:id="@+id/option2"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 2"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toTopOf="@+id/option3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option1" />
+
+    <Button
+        android:id="@+id/option3"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 3"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toTopOf="@+id/option4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option2" />
+
+    <Button
+        android:id="@+id/option4"
+        android:layout_width="249dp"
+        android:layout_height="76dp"
+        android:text="Opción 4"
+        android:textColor="#000000"
+        app:backgroundTint="#FAE634"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,7 @@ Ornn
 Miss Fortune
 Lux
 C
-1
+0
 ¿Cuál de estas habilidades inmoviliza al campeón enemigo durante más tiempo (todas las habilidades están a nivel 1)?
 Burbuja Dormilona (Zoe)
 Hechizo Oscuro(Morgana)
@@ -35,13 +35,13 @@ Llamarada Solar(Leona)
 Cadenas Etéreas(LeBlanc)
 L
 2
-¿Qué personaje no proviene de Zaun?
+¿Qué personaje no proviene de esta región de Runaterra?
 Ziggs
 Dr. Mundo
 Singed
 Viktor
 L
-1
+0
 ¿Cuál de estos personajes no es un darkin?
 Diana
 Kayn (Rhaast)
