@@ -29,10 +29,10 @@ Lux
 C
 1
 ¿Cuál de estas habilidades inmoviliza al campeón enemigo durante más tiempo (todas las habilidades están a nivel 1)?
-veigar
-kassadin
-mundo
-lux
+burbujador
+hechizoos
+llamaradasol
+cadenaset
 L
 2
 ¿Qué personaje no proviene de esta región de Runaterra?
@@ -43,10 +43,10 @@ Viktor
 L
 1
 ¿Cuál de estos personajes no es un darkin?
-veigar
-kassadin
-mundo
-lux
+diana
+aatrox
+varus
+rhaast
 L
 0
 ¿Cuál de estos personajes no pertenece a la Orden Kinkou?
