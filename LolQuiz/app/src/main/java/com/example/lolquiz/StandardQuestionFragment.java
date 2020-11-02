@@ -1,5 +1,10 @@
 package com.example.lolquiz;
 
+import android.animation.Animator;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,8 +51,42 @@ public class StandardQuestionFragment extends Fragment {
             options.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    v.setOnClickListener(null);
+                    ValueAnimator valueanimator;
+                    if(v.getTag().equals(0)){
+                        valueanimator = ObjectAnimator.ofInt(v,"backgroundColor", Color.parseColor("#FAE634"),Color.parseColor("#60BA1D"));
+                    }else{
+                        valueanimator = ObjectAnimator.ofInt(v,"backgroundColor", Color.parseColor("#FAE634"),Color.parseColor("#C62B38"));
+                    }
+
+                    valueanimator.setDuration(1000);
+                    valueanimator.setEvaluator(new ArgbEvaluator());
+
+                    valueanimator.start();
                     if (((GameActivity) getActivity()).checkAnswer(v)) {
-                        ((GameActivity) getActivity()).clickButton();
+                            valueanimator.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    ((GameActivity) getActivity()).clickButton();
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+                            });
+
+
                     }
                 }
             });

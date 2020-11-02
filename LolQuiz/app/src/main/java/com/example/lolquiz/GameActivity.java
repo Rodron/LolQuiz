@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -235,10 +237,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public boolean checkAnswer(View v){
+
+
         questionCounter ++;
         if (v.getTag().equals(0)){
+
             correctCounter ++;
         }
+
         if(questionCounter == 10){
             Intent intent = new Intent(this, RankingActivity.class);
             intent.putExtra("questionCounter",questionCounter);
