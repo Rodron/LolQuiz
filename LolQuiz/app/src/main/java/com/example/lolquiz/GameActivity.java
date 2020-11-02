@@ -1,10 +1,15 @@
 package com.example.lolquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.TextureView;
@@ -28,6 +33,15 @@ public class GameActivity extends AppCompatActivity {
 
     private  int questionCounter = 0;
     private  int correctCounter = 0;
+    List<Button> options = new ArrayList<>();
+    List<ImageButton> imageOptions = new ArrayList<>();
+    List<Integer> alreadyUsed = new ArrayList<>();
+    TextView category;
+    View categoryBackground;
+    List<List<String>> questions = new ArrayList<>();
+    TextView questionBox;
+    FragmentManager fragmentController;
+    FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +49,26 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         InputStream is = getResources().openRawResource(R.raw.preguntas);
 
-        TextView questionBox = (TextView) findViewById(R.id.question);
-         List<List<String>> questions = new ArrayList<>();
-         List<Integer> alreadyUsed = new ArrayList<>();
-        List<Button> options = new ArrayList<>();
+        //questionBox = (TextView) findViewById(R.id.question);
+        questions = new ArrayList<>();
+        alreadyUsed = new ArrayList<>();
 
-        TextView category = (TextView) findViewById(R.id.category);
-        View categoryBackground = findViewById(R.id.categoryBackground);
+        category = (TextView) findViewById(R.id.category);
+        categoryBackground = findViewById(R.id.categoryBackground);
+
+        //fragmentController = getSupportFragmentManager();
+        //transaction = fragmentController.beginTransaction();
 
         ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                goToMenu();
             }
         });
+
+
+        /*
         Button option1 =  (Button)  findViewById(R.id.option1);
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +117,7 @@ public class GameActivity extends AppCompatActivity {
         options.add(option2);
         options.add(option3);
         options.add(option4);
+        */
 
         try{
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -124,39 +144,85 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
-        alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
+        questionGenerator();
 
     }
 
     @SuppressLint("SetTextI18n")
-    public int questionGenerator(List<Integer> alreadyUsed, List<List<String>> questions, List<Button> options, TextView questionBox, TextView category, View categoryBackground){
+    public void questionGenerator() {
         Random random = new Random();
         int questionTitle = random.nextInt(10);
-        while(alreadyUsed.contains(questionTitle)){
+        while (alreadyUsed.contains(questionTitle)) {
             questionTitle = random.nextInt(10);
         }
 
-        questionBox.setText(questions.get(questionTitle).get(2));
+        alreadyUsed.add(questionTitle);
+
+        fragmentController = getSupportFragmentManager();
+        transaction = fragmentController.beginTransaction();
+
+        switch (Integer.parseInt(questions.get(questionTitle).get(1))) {
+            case 0:
+                StandardQuestionFragment fragment0 = new StandardQuestionFragment();
+                transaction.replace(R.id.frameLayout, fragment0);
+                transaction.commit();
+                break;
+            case 1:
+                ImageAnswersQuestionsFragment fragment1 = new ImageAnswersQuestionsFragment();
+                transaction.replace(R.id.frameLayout, fragment1);
+                transaction.commit();
+                break;
+            case 2:
+                ImageQuestionFragment fragment2 = new ImageQuestionFragment();
+                transaction.replace(R.id.frameLayout, fragment2);
+                transaction.commit();
+                break;
+
+        }
+    }
+
+    public void questionWriter(){
+        Random random = new Random();
+        questionBox.setText(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(2));
 
         int buttonIndex = random.nextInt(4);
         ArrayList<Integer> usedButtons = new ArrayList<Integer>();
 
         usedButtons.add(buttonIndex);
 
-        options.get(buttonIndex).setText(questions.get(questionTitle).get(3));
-        options.get(buttonIndex).setTag(0);
+        switch (Integer.parseInt(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(1))){
+            case 2:
+            case 0:
+                options.get(buttonIndex).setText(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(3));
+                options.get(buttonIndex).setTag(0);
 
-        while(usedButtons.size() != 4) {
-            while (usedButtons.contains(buttonIndex)) {
-                buttonIndex = random.nextInt(4);
-            }
-            usedButtons.add(buttonIndex);
+                while(usedButtons.size() != 4) {
+                    while (usedButtons.contains(buttonIndex)) {
+                        buttonIndex = random.nextInt(4);
+                    }
+                    usedButtons.add(buttonIndex);
 
-            options.get(buttonIndex).setText(questions.get(questionTitle).get(2 + usedButtons.size()));
-            options.get(buttonIndex).setTag(1);
+                    options.get(buttonIndex).setText(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(2 + usedButtons.size()));
+                    options.get(buttonIndex).setTag(1);
+                }
+                break;
+            case 1:
+                imageOptions.get(buttonIndex).setImageResource(getImageId(this, questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(3)));
+                imageOptions.get(buttonIndex).setTag(0);
+
+                while(usedButtons.size() != 4) {
+                    while (usedButtons.contains(buttonIndex)) {
+                        buttonIndex = random.nextInt(4);
+                    }
+                    usedButtons.add(buttonIndex);
+
+                    imageOptions.get(buttonIndex).setImageResource(getImageId(this, questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(2 + usedButtons.size())));
+                    imageOptions.get(buttonIndex).setTag(1);
+                }
+                break;
         }
 
-        switch(questions.get(questionTitle).get(0)){
+        switch(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(0)){
             case "C":
                 category.setText("Campeones y habilidades");
                 categoryBackground.setBackgroundColor(Color.parseColor("#C62B38"));
@@ -166,12 +232,6 @@ public class GameActivity extends AppCompatActivity {
                 categoryBackground.setBackgroundColor(Color.parseColor("#60BA1D"));
                 break;
         }
-
-
-
-        return questionTitle;
-
-
     }
 
     public boolean checkAnswer(View v){
@@ -188,6 +248,31 @@ public class GameActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void goToMenu(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void receiveQuestion (TextView question){
+        questionBox = question;
+    }
+
+    public void receiveButtons (List<Button> receivedOptions){
+        options = receivedOptions;
+    }
+
+    public void receiveImageButtons (List<ImageButton> receivedOptions){
+        imageOptions = receivedOptions;
+    }
+
+    public void clickButton(){
+        questionGenerator();
+    }
+
+    public static int getImageId(Context context, String imageName) {
+        return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
     }
 
 }

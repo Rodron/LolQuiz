@@ -1,58 +1,31 @@
 package com.example.lolquiz;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ImageQuestionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ImageQuestionFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    List<Button> options = new ArrayList<Button>();
+    TextView questionBox;
     public ImageQuestionFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ImageQuestionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ImageQuestionFragment newInstance(String param1, String param2) {
-        ImageQuestionFragment fragment = new ImageQuestionFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -60,5 +33,28 @@ public class ImageQuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_image_question, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        questionBox = (TextView) getView().findViewById(R.id.question);
+        options.add((Button) getView().findViewById(R.id.option1));
+        options.add((Button) getView().findViewById(R.id.option2));
+        options.add((Button) getView().findViewById(R.id.option3));
+        options.add((Button) getView().findViewById(R.id.option4));
+        for (int i = 0; i<4;i++) {
+            options.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (((GameActivity) getActivity()).checkAnswer(v)) {
+                        ((GameActivity) getActivity()).clickButton();
+                    }
+                }
+            });
+        }
+        ((GameActivity) getActivity()).receiveButtons(options);
+        ((GameActivity) getActivity()).receiveQuestion(questionBox);
+        ((GameActivity) getActivity()).questionWriter();
     }
 }

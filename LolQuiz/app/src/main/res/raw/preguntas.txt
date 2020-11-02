@@ -8,10 +8,10 @@ Perturbación tectónica
 C
 1
 ¿Cuál de estos campeones es más antiguo?
-Veigar
-Kassadin
-Dr. Mundo
-Lux
+veigar
+kassadin
+mundo
+lux
 C
 0
 A fecha de 24/10/2020 ¿cuál de estos campeones tiene un mayor cooldown en su ultimate al nivel 6 (sin aplicar items o runas de CDR)?
@@ -27,12 +27,12 @@ Ornn
 Miss Fortune
 Lux
 C
-0
+1
 ¿Cuál de estas habilidades inmoviliza al campeón enemigo durante más tiempo (todas las habilidades están a nivel 1)?
-Burbuja Dormilona (Zoe)
-Hechizo Oscuro(Morgana)
-Llamarada Solar(Leona)
-Cadenas Etéreas(LeBlanc)
+veigar
+kassadin
+mundo
+lux
 L
 2
 ¿Qué personaje no proviene de esta región de Runaterra?
@@ -41,12 +41,12 @@ Dr. Mundo
 Singed
 Viktor
 L
-0
+1
 ¿Cuál de estos personajes no es un darkin?
-Diana
-Kayn (Rhaast)
-Varus
-Aatrox
+veigar
+kassadin
+mundo
+lux
 L
 0
 ¿Cuál de estos personajes no pertenece a la Orden Kinkou?
