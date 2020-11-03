@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class StandardQuestionFragment extends Fragment {
@@ -51,7 +52,9 @@ public class StandardQuestionFragment extends Fragment {
             options.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.setOnClickListener(null);
+                    for (View button : options){
+                        button.setOnClickListener(null);
+                    }
                     ValueAnimator valueanimator;
                     if(v.getTag().equals(0)){
                         valueanimator = ObjectAnimator.ofInt(v,"backgroundColor", Color.parseColor("#FAE634"),Color.parseColor("#60BA1D"));
@@ -63,7 +66,7 @@ public class StandardQuestionFragment extends Fragment {
                     valueanimator.setEvaluator(new ArgbEvaluator());
 
                     valueanimator.start();
-                    if (((GameActivity) getActivity()).checkAnswer(v)) {
+                    if (((GameActivity) Objects.requireNonNull(getActivity())).checkAnswer(v)) {
                             valueanimator.addListener(new Animator.AnimatorListener() {
                                 @Override
                                 public void onAnimationStart(Animator animation) {
@@ -85,13 +88,33 @@ public class StandardQuestionFragment extends Fragment {
 
                                 }
                             });
+                    }else {
+                        valueanimator.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
 
+                            }
 
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                ((GameActivity) getActivity()).goToResults();
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
                     }
                 }
             });
         }
-        ((GameActivity) getActivity()).receiveButtons(options);
+        ((GameActivity) Objects.requireNonNull(getActivity())).receiveButtons(options);
         ((GameActivity) getActivity()).receiveQuestion(questionBox);
         ((GameActivity) getActivity()).questionWriter();
     }

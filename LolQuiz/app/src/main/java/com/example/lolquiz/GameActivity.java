@@ -18,6 +18,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
     View categoryBackground;
     List<List<String>> questions = new ArrayList<>();
     TextView questionBox;
+    ImageView questionImg;
     FragmentManager fragmentController;
     FragmentTransaction transaction;
 
@@ -80,7 +82,6 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
-
         Button option2 =  (Button)  findViewById(R.id.option2);
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +89,8 @@ public class GameActivity extends AppCompatActivity {
                 if(checkAnswer(v)){
                     alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
                 }
-
             }
         });
-
         Button option3 =  (Button)  findViewById(R.id.option3);
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,9 +100,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
-
         Button option4 =  (Button)  findViewById(R.id.option4);
-
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,9 +109,6 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
         options.add(option1);
         options.add(option2);
         options.add(option3);
@@ -163,7 +157,7 @@ public class GameActivity extends AppCompatActivity {
         fragmentController = getSupportFragmentManager();
         transaction = fragmentController.beginTransaction();
 
-        switch (Integer.parseInt(questions.get(questionTitle).get(1))) {
+        switch (Integer.parseInt(questions.get(questionTitle).get(1).substring(0,1))) {
             case 0:
                 StandardQuestionFragment fragment0 = new StandardQuestionFragment();
                 transaction.replace(R.id.frameLayout, fragment0);
@@ -191,9 +185,10 @@ public class GameActivity extends AppCompatActivity {
         ArrayList<Integer> usedButtons = new ArrayList<Integer>();
 
         usedButtons.add(buttonIndex);
-
-        switch (Integer.parseInt(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(1))){
+        String questionType = questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(1);
+        switch (Integer.parseInt(""+questionType.substring(0,1))){
             case 2:
+                questionImg.setImageResource(getImageId(this, questionType.substring(1)));
             case 0:
                 options.get(buttonIndex).setText(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(3));
                 options.get(buttonIndex).setTag(0);
@@ -227,33 +222,28 @@ public class GameActivity extends AppCompatActivity {
         switch(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(0)){
             case "C":
                 category.setText("Campeones y habilidades");
-                categoryBackground.setBackgroundColor(Color.parseColor("#C62B38"));
+                categoryBackground.setBackgroundColor(Color.parseColor("#272B71"));
                 break;
             case "L" :
                 category.setText("Lore del juego");
-                categoryBackground.setBackgroundColor(Color.parseColor("#60BA1D"));
+                categoryBackground.setBackgroundColor(Color.parseColor("#1C9E71"));
                 break;
         }
     }
 
     public boolean checkAnswer(View v){
-
+        boolean end = true;
 
         questionCounter ++;
         if (v.getTag().equals(0)){
-
             correctCounter ++;
         }
 
-        if(questionCounter == 10){
-            Intent intent = new Intent(this, RankingActivity.class);
-            intent.putExtra("questionCounter",questionCounter);
-            intent.putExtra("correctCounter",correctCounter);
-            startActivity(intent);
-            return false;
+        if(questionCounter == questions.size()){
+            end = false;
         }
 
-        return true;
+        return end;
     }
 
     public void goToMenu(){
@@ -261,9 +251,15 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void receiveQuestion (TextView question){
-        questionBox = question;
+    public void goToResults(){
+        Intent intent = new Intent(this, RankingActivity.class);
+        intent.putExtra("questionCounter",questionCounter);
+        intent.putExtra("correctCounter",correctCounter);
+        startActivity(intent);
     }
+
+    public void receiveQuestion (TextView question){        questionBox = question;    }
+    public void receiveQuestionImage (ImageView questionImage){        questionImg = questionImage;    }
 
     public void receiveButtons (List<Button> receivedOptions){
         options = receivedOptions;

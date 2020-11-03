@@ -4,7 +4,7 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
+
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -15,15 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ImageQuestionFragment extends Fragment {
     List<Button> options = new ArrayList<Button>();
     TextView questionBox;
+    ImageView questionImage;
     public ImageQuestionFragment() {
         // Required empty public constructor
     }
@@ -44,6 +47,7 @@ public class ImageQuestionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         questionBox = (TextView) getView().findViewById(R.id.question);
+        questionImage = (ImageView) getView().findViewById(R.id.photo);
         options.add((Button) getView().findViewById(R.id.option1));
         options.add((Button) getView().findViewById(R.id.option2));
         options.add((Button) getView().findViewById(R.id.option3));
@@ -52,7 +56,9 @@ public class ImageQuestionFragment extends Fragment {
             options.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.setOnClickListener(null);
+                    for (View button : options){
+                        button.setOnClickListener(null);
+                    }
                     ValueAnimator valueanimator;
                     if(v.getTag().equals(0)){
                         valueanimator = ObjectAnimator.ofInt(v,"backgroundColor", Color.parseColor("#FAE634"),Color.parseColor("#60BA1D"));
@@ -64,7 +70,7 @@ public class ImageQuestionFragment extends Fragment {
                     valueanimator.setEvaluator(new ArgbEvaluator());
 
                     valueanimator.start();
-                    if (((GameActivity) getActivity()).checkAnswer(v)) {
+                    if (((GameActivity) Objects.requireNonNull(getActivity())).checkAnswer(v)) {
                         valueanimator.addListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animation) {
@@ -86,12 +92,35 @@ public class ImageQuestionFragment extends Fragment {
 
                             }
                         });
+                    }else {
+                        valueanimator.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                ((GameActivity) getActivity()).goToResults();
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
                     }
                 }
             });
         }
-        ((GameActivity) getActivity()).receiveButtons(options);
+        ((GameActivity) Objects.requireNonNull(getActivity())).receiveButtons(options);
         ((GameActivity) getActivity()).receiveQuestion(questionBox);
+        ((GameActivity) getActivity()).receiveQuestionImage(questionImage);
         ((GameActivity) getActivity()).questionWriter();
     }
 }

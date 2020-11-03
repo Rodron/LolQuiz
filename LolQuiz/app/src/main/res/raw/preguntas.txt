@@ -34,7 +34,7 @@ hechizoos
 llamaradasol
 cadenaset
 L
-2
+2zaun
 ¿Qué personaje no proviene de esta región de Runaterra?
 Ziggs
 Dr. Mundo
