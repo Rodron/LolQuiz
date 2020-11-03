@@ -53,15 +53,11 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         InputStream is = getResources().openRawResource(R.raw.preguntas);
 
-        //questionBox = (TextView) findViewById(R.id.question);
         questions = new ArrayList<>();
         alreadyUsed = new ArrayList<>();
 
         category = (TextView) findViewById(R.id.category);
         categoryBackground = findViewById(R.id.categoryBackground);
-
-        //fragmentController = getSupportFragmentManager();
-        //transaction = fragmentController.beginTransaction();
 
         ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener(){
@@ -70,50 +66,6 @@ public class GameActivity extends AppCompatActivity {
                 goToMenu();
             }
         });
-
-
-        /*
-        Button option1 =  (Button)  findViewById(R.id.option1);
-        option1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkAnswer(v)){
-                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
-                }
-            }
-        });
-        Button option2 =  (Button)  findViewById(R.id.option2);
-        option2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkAnswer(v)){
-                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
-                }
-            }
-        });
-        Button option3 =  (Button)  findViewById(R.id.option3);
-        option3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkAnswer(v)){
-                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
-                }
-            }
-        });
-        Button option4 =  (Button)  findViewById(R.id.option4);
-        option4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkAnswer(v)){
-                    alreadyUsed.add( questionGenerator(alreadyUsed,questions,options,questionBox,category,categoryBackground));
-                }
-            }
-        });
-        options.add(option1);
-        options.add(option2);
-        options.add(option3);
-        options.add(option4);
-        */
 
         try{
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -134,7 +86,6 @@ public class GameActivity extends AppCompatActivity {
             br.close();
         }
         catch (IOException e) {
-            //You'll need to add proper error handling here
             Toast.makeText(this, "Error al leer el archivo de preguntas", Toast.LENGTH_SHORT).show();
 
         }

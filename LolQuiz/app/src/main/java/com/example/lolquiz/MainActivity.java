@@ -21,14 +21,25 @@ public class MainActivity extends AppCompatActivity{
                 newGame();
             }
         });
+
+        Button options =  (Button)  findViewById(R.id.optionsButton);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                options();
+            }
+        });
         //Button rankingButton = (Button)  findViewById(R.id.rankingButton);
     }
 
     public void newGame(){
-
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+    }
 
+    public void options(){
+        Intent intent = new Intent(this, OptionsActivity.class);
+        startActivity(intent);
     }
 
     @Override
