@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Se recogen los botones del menú y se añade la funcionalidad correspondiente.
         Button newGameButton =  (Button)  findViewById(R.id.newGameButton);
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,7 +30,11 @@ public class MainActivity extends AppCompatActivity{
                 options();
             }
         });
-        //Button rankingButton = (Button)  findViewById(R.id.rankingButton);
+
+        // Se ha omitido la funcionalidad del rankingButton ya que será implementado en una versión
+        // futura pero se ha dejado en la pantalla a modo demostrativo de nuestra idea de diseño de
+        // la pantalla
+        // Button rankingButton = (Button)  findViewById(R.id.rankingButton);
     }
 
     public void newGame(){

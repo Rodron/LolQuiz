@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// Este fragmento gestiona las preguntas que tienen imagenes en el enunciado (tipo 2).
 
 public class ImageQuestionFragment extends Fragment {
     List<Button> options = new ArrayList<Button>();
@@ -46,14 +47,20 @@ public class ImageQuestionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Se buscan los elementos del fragmento y se pasan a la actividad para poder ejecutar el
+        // método questionwriter.
         questionBox = (TextView) getView().findViewById(R.id.question);
         questionImage = (ImageView) getView().findViewById(R.id.photo);
         options.add((Button) getView().findViewById(R.id.option1));
         options.add((Button) getView().findViewById(R.id.option2));
         options.add((Button) getView().findViewById(R.id.option3));
         options.add((Button) getView().findViewById(R.id.option4));
+
         for (int i = 0; i<4;i++) {
             options.get(i).setOnClickListener(new View.OnClickListener() {
+                // Aquí se ha implementado una animación para darle feedback visual al usuario
+                // dependiendo de si su respuesta es correcta o no.
                 @Override
                 public void onClick(View v) {
                     for (View button : options){
@@ -70,6 +77,10 @@ public class ImageQuestionFragment extends Fragment {
                     valueanimator.setEvaluator(new ArgbEvaluator());
 
                     valueanimator.start();
+
+                    // Con este if se establece la opción a realizar tras completar la animación,
+                    // mostrar una nueva pregunta o ir a la pantalla del resultados. Esto se decide
+                    // en base al return proporcionado por el método checkAnswer.
                     if (((GameActivity) Objects.requireNonNull(getActivity())).checkAnswer(v)) {
                         valueanimator.addListener(new Animator.AnimatorListener() {
                             @Override
@@ -118,6 +129,9 @@ public class ImageQuestionFragment extends Fragment {
                 }
             });
         }
+
+        // Se pasan a la actividad los elementos del fragmento para posteriormente proceder a ejecutar
+        // el método questionwriter.
         ((GameActivity) Objects.requireNonNull(getActivity())).receiveButtons(options);
         ((GameActivity) getActivity()).receiveQuestion(questionBox);
         ((GameActivity) getActivity()).receiveQuestionImage(questionImage);

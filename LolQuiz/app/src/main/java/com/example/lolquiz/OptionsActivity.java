@@ -26,6 +26,7 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
+        //Configuración de los parámetros del spinner
         Spinner spinner = findViewById(R.id.spinnerTheme);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.themes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
