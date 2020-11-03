@@ -8,13 +8,42 @@
     tools:context=".OptionsActivity">
 
     <View
+        android:id="@+id/view"
+        android:layout_width="325dp"
+        android:layout_height="506dp"
+        android:layout_marginTop="114dp"
+        android:background="#FAE634"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/category2"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:fontFamily="@font/friz_quadrata"
+        android:text="Lore del juego"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category1" />
+
+    <CheckBox
+        android:id="@+id/category1"
+        android:layout_width="298dp"
+        android:layout_height="49dp"
+        android:fontFamily="@font/friz_quadrata"
+        android:text="Campeones y habilidades"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryOpt" />
+
+    <View
         android:id="@+id/optionsTitleBackground"
         android:layout_width="396dp"
         android:layout_height="53dp"
         android:layout_marginTop="8dp"
         android:background="#1C9E71"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,25 +73,6 @@
         app:layout_constraintTop_toTopOf="@+id/optionsTitleBackground"
         app:srcCompat="@drawable/abc_vector_test" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="325dp"
-        android:layout_height="506dp"
-        android:layout_marginTop="114dp"
-        android:background="#FAE634"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinnerTheme"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="13dp"
-        android:fontFamily="@font/friz_quadrata_bold"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/theme" />
-
     <SeekBar
         android:id="@+id/seekBar"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -75,15 +85,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionN" />
 
-    <CheckBox
-        android:id="@+id/category2"
-        android:layout_width="298dp"
-        android:layout_height="43dp"
+    <Spinner
+        android:id="@+id/spinnerTheme"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="13dp"
+        android:fontFamily="@font/friz_quadrata_bold"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/theme" />
+
+    <Switch
+        android:id="@+id/music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/friz_quadrata"
-        android:text="Lore del juego"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category1" />
+        android:text="MÚSICA"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/category2" />
 
     <TextView
         android:id="@+id/questionN"
@@ -97,18 +118,6 @@
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/music" />
-
-    <Switch
-        android:id="@+id/music"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="MÚSICA"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/category2" />
 
     <TextView
         android:id="@+id/categoryOpt"
@@ -135,15 +144,5 @@
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />
-
-    <CheckBox
-        android:id="@+id/category1"
-        android:layout_width="298dp"
-        android:layout_height="49dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="Campeones y habilidades"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryOpt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
