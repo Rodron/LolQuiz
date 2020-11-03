@@ -1,6 +1,8 @@
 # LolQuiz
 
-4 categorías:
+Idea inicial (posiblemente sufra cambios a lo largo del desarrollo)
+
+5 categorías:
 - Mecánicas del juego
 - Lore de los campeones
 - Items
