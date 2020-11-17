@@ -1,5 +1,6 @@
 # LolQuiz
 
+
 Idea inicial (posiblemente sufra cambios a lo largo del desarrollo)
 
 5 categorías:
