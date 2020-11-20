@@ -73,76 +73,60 @@
         app:layout_constraintTop_toTopOf="@+id/optionsTitleBackground"
         app:srcCompat="@drawable/abc_vector_test" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="283dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="12dp"
-        android:max="9"
-        android:progress="9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionN" />
-
-    <Spinner
-        android:id="@+id/spinnerTheme"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="13dp"
-        android:fontFamily="@font/friz_quadrata_bold"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/theme" />
-
-    <Switch
-        android:id="@+id/music"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="MÚSICA"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/category2" />
-
     <TextView
         android:id="@+id/questionN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="40dp"
         android:fontFamily="@font/friz_quadrata"
         android:text="NÚMERO DE PREGUNTAS"
         android:textColor="#000000"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/music" />
+        tools:layout_editor_absoluteY="475dp" />
 
     <TextView
         android:id="@+id/categoryOpt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="40dp"
         android:fontFamily="@font/friz_quadrata"
         android:text="CATEGORÍAS"
         android:textColor="#000000"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTheme" />
+        tools:layout_editor_absoluteY="254dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="52dp"
+        android:layout_height="49dp"
+        android:rotation="90"
+        app:srcCompat="@android:drawable/arrow_down_float"
+        android:background="#00000000"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="508dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="52dp"
+        android:layout_height="49dp"
+        android:rotation="-90"
+        android:background="#00000000"
+        app:srcCompat="@android:drawable/arrow_down_float"
+        tools:layout_editor_absoluteX="240dp"
+        tools:layout_editor_absoluteY="508dp" />
 
     <TextView
-        android:id="@+id/theme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="TEMA"
-        android:textColor="#000000"
+        android:id="@+id/textView"
+        android:layout_width="69dp"
+        android:layout_height="25dp"
+        android:textAlignment="center"
+        android:text="20"
+        android:textColor="#2C2C2C"
         android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        android:fontFamily="@font/friz_quadrata"
+        tools:layout_editor_absoluteX="171dp"
+        tools:layout_editor_absoluteY="521dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
