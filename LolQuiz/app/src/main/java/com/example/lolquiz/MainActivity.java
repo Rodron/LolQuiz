@@ -2,12 +2,17 @@ package com.example.lolquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity{
+    Context context;
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,14 @@ public class MainActivity extends AppCompatActivity{
                 options();
             }
         });
+
+        /*
+        context = this;
+        sharedPref = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        String o = sharedPref.getString("categories", "1111");
+        String q = sharedPref.getString("questions", "5");
+        Toast.makeText(context, q, Toast.LENGTH_SHORT).show();
+        //*/
 
         // Se ha omitido la funcionalidad del rankingButton ya que será implementado en una versión
         // futura pero se ha dejado en la pantalla a modo demostrativo de nuestra idea de diseño de

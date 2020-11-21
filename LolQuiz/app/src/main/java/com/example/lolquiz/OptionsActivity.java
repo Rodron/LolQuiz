@@ -2,21 +2,28 @@ package com.example.lolquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class OptionsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    int questNumber = 20;
+    int questNumber;
     int categCount = 0;
+    Context context;
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +31,24 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_options);
 
         CheckBox [] categs = new CheckBox[4];
+        TextView questions = (TextView) findViewById(R.id.questions);
+        EditText username = (EditText) findViewById(R.id.insertUsername);
 
-
+        context = this;
+        sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
         categs[0] = (CheckBox) findViewById(R.id.category1);
         categs[1] = (CheckBox) findViewById(R.id.category2);
-        categs[2] = (CheckBox) findViewById(R.id.category2);
-        categs[3] = (CheckBox) findViewById(R.id.category3);
+        categs[2] = (CheckBox) findViewById(R.id.category3);
+        categs[3] = (CheckBox) findViewById(R.id.category4);
 
+        String categCode = sharedPref.getString("categories", "1111");
         for(int i = 0; i < 4; i++) {
+            categs[i].setChecked(categCode.charAt(i)-'0' == 1);
+
+            if (categs[i].isChecked()){
+                categCount++;
+            }
 
             categs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -42,20 +58,38 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
                     }
                     else {
                         checkAdd(-1);
+                        if(questNumber>categCount*5){
+                            questNumber = categCount*5;
+                            assignQuestions(questions);
+                        }
                     }
-                }
-            });
-
-            categs[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (categCount == 0){
-                        ((CheckBox)v).setChecked(true);
-                    }
-                    //Toast.makeText(((CheckBox)v).getContext(), "" + categCount, Toast.LENGTH_SHORT).show();
+                    categsCheck(categs);
                 }
             });
         }
+
+        categsCheck(categs);
+
+        questNumber = Integer.parseInt(sharedPref.getString("questions", "20"));
+
+        username.setText(sharedPref.getString("user","Anónimo"));
+        username.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sharedPref.edit().putString("user", s.toString()).apply();
+            }
+        });
 
         ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener(){
@@ -65,17 +99,16 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
-        TextView questions = (TextView) findViewById(R.id.questions);
-        questions.setText("" + questNumber);
+        assignQuestions(questions);
 
         ImageButton addQuestion = (ImageButton) findViewById(R.id.addQuestion);
         addQuestion.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 categs[0].setChecked(true);
-                if (questNumber<20){
+                if (questNumber<categCount*5){
                     questNumber++;
-                    questions.setText("" + questNumber);
+                    assignQuestions(questions);
                 }
             }
         });
@@ -86,20 +119,27 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
             public void onClick(View v){
                 if (questNumber>5) {
                     questNumber--;
-                    questions.setText("" + questNumber);
+                    assignQuestions(questions);
                 }
             }
         });
     }
 
-    public int getCategsCheck(CheckBox[] categs){
-        int count = 0;
+    public void categsCheck(CheckBox[] categs){
+        String s = "";
         for(CheckBox check : categs){
             if (check.isChecked()){
-                count++;
+                s += 1;
+                check.setEnabled(true);
+                if(categCount == 1) {
+                    check.setEnabled(false);
+                }
+            }else {
+                s+= 0;
             }
         }
-        return count;
+
+        sharedPref.edit().putString("categories", s).apply();
     }
 
     public void checkAdd(int n){
@@ -110,6 +150,11 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
     public void goToMenu(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void assignQuestions(TextView questions){
+        questions.setText("" + questNumber);
+        sharedPref.edit().putString("questions", ""+questNumber).apply();
     }
 
     @Override

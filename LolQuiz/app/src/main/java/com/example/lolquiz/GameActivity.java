@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -28,21 +29,31 @@ public class GameActivity extends AppCompatActivity {
 
     private  int questionCounter = 0;
     private  int correctCounter = 0;
+    private int questionNumber;
     List<Button> options = new ArrayList<>();
     List<ImageButton> imageOptions = new ArrayList<>();
     List<Integer> alreadyUsed = new ArrayList<>();
     TextView category;
+    TextView questionCount;
+    TextView correctCount;
     View categoryBackground;
     List<List<String>> questions = new ArrayList<>();
     TextView questionBox;
     ImageView questionImg;
     FragmentManager fragmentController;
     FragmentTransaction transaction;
+    Context context;
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        context = this;
+        sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+
+        questionNumber = Integer.parseInt(sharedPref.getString("questions", "5"));
 
         // Inicializamos los parámetros de la clase que usaremos durante la actividad.
         InputStream is = getResources().openRawResource(R.raw.preguntas);
@@ -52,6 +63,9 @@ public class GameActivity extends AppCompatActivity {
 
         category = (TextView) findViewById(R.id.category);
         categoryBackground = findViewById(R.id.categoryBackground);
+
+        questionCount = (TextView) findViewById(R.id.questionCount);
+        correctCount = (TextView) findViewById(R.id.correctCount);
 
         ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener(){
@@ -95,13 +109,13 @@ public class GameActivity extends AppCompatActivity {
         // Esta función genera un indice aleatorio que selecciona la próxima pregunta a mostrar de
         // las que están contenidas en el ArrayList questions.
         Random random = new Random();
-        int questionTitle = random.nextInt(10);
+        int questionTitle = random.nextInt(questionNumber);
 
         // Además el índice seleccionado se añade a un array de preguntas usadas para que no pueda
         // volver a salir durante la partida y se comprueba dicho array para que asegurarnos de que
         // la pregunta no ha salido.
         while (alreadyUsed.contains(questionTitle)) {
-            questionTitle = random.nextInt(10);
+            questionTitle = random.nextInt(questionNumber);
         }
 
         alreadyUsed.add(questionTitle);
@@ -135,6 +149,8 @@ public class GameActivity extends AppCompatActivity {
         // y los elementos de la pantalla y rellenarlos con los contenidos de la pregunta (enunciado,
         // respuestas, imágenes, color de la categoría, nombre de la categoría...).
         // Los botones en los que se coloca cada respuesta se seleccionan también de forma aleatoria.
+        updateCounts();
+
         Random random = new Random();
 
         // Aquí se asigna el enunciado de la pregunta.
@@ -213,7 +229,7 @@ public class GameActivity extends AppCompatActivity {
             correctCounter ++;
         }
 
-        if(questionCounter == questions.size()){
+        if(questionCounter == questionNumber){
             next = false;
         }
 
@@ -233,6 +249,11 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra("questionCounter",questionCounter);
         intent.putExtra("correctCounter",correctCounter);
         startActivity(intent);
+    }
+
+    public void updateCounts(){
+        questionCount.setText(questionCounter+"/"+questionNumber);
+        correctCount.setText(""+correctCounter);
     }
 
     public void receiveQuestion (TextView question){        questionBox = question;    }
