@@ -50,7 +50,7 @@
         android:layout_width="281dp"
         android:layout_height="71dp"
         android:layout_marginTop="244dp"
-        android:text="Ranking"
+        android:text="Puntuaciones"
         android:textColor="#000000"
         app:backgroundTint="#FAE634"
         app:backgroundTintMode="add"

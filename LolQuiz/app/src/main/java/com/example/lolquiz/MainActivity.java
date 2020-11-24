@@ -36,13 +36,14 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        /*
-        context = this;
-        sharedPref = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        String o = sharedPref.getString("categories", "1111");
-        String q = sharedPref.getString("questions", "5");
-        Toast.makeText(context, q, Toast.LENGTH_SHORT).show();
-        //*/
+        Button ranking =  (Button)  findViewById(R.id.rankingButton);
+        ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ranking();
+            }
+        });
+
 
         // Se ha omitido la funcionalidad del rankingButton ya que será implementado en una versión
         // futura pero se ha dejado en la pantalla a modo demostrativo de nuestra idea de diseño de
@@ -60,6 +61,11 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    public void ranking(){
+        Intent intent = new Intent(this, RankingActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onBackPressed(){
         Intent a = new Intent(Intent.ACTION_MAIN);
@@ -67,10 +73,4 @@ public class MainActivity extends AppCompatActivity{
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
     }
-    /*
-    public void onClickRankingButton(View v){
-        Intent intent = new Intent(this, RankingActivity.class);
-        startActivity(intent);
-
-    }*/
 }

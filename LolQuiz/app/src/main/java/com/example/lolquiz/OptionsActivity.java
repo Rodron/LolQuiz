@@ -105,11 +105,14 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
         addQuestion.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                categs[0].setChecked(true);
                 if (questNumber<categCount*5){
                     questNumber++;
                     assignQuestions(questions);
                 }
+                else if (categCount != 4)
+                    Toast.makeText(context, "Se ha alcanzado el número máximo de preguntas (seleccione más categorías si desea agregar más preguntas).", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(context, "Se ha alcanzado el número máximo de preguntas.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -117,10 +120,12 @@ public class OptionsActivity extends AppCompatActivity implements AdapterView.On
         subsQuestion.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if (questNumber>5) {
+                if (questNumber>4) {
                     questNumber--;
                     assignQuestions(questions);
                 }
+                else
+                    Toast.makeText(context, "Se ha alcanzado el número mínimo de preguntas.", Toast.LENGTH_SHORT).show();
             }
         });
     }

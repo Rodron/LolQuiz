@@ -50,19 +50,18 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        context = this;
-        sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-
-        questionNumber = Integer.parseInt(sharedPref.getString("questions", "5"));
-
         // Inicializamos los parámetros de la clase que usaremos durante la actividad.
+        context = this;
         InputStream is = getResources().openRawResource(R.raw.preguntas);
+
+        sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        questionNumber = Integer.parseInt(sharedPref.getString("questions", "5"));
 
         questions = new ArrayList<>();
         alreadyUsed = new ArrayList<>();
 
-        category = (TextView) findViewById(R.id.category);
-        categoryBackground = findViewById(R.id.categoryBackground);
+        category = (TextView) findViewById(R.id.ranking);
+        categoryBackground = findViewById(R.id.rankingBackground);
 
         questionCount = (TextView) findViewById(R.id.questionCount);
         correctCount = (TextView) findViewById(R.id.correctCount);
