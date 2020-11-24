@@ -8,36 +8,6 @@
     tools:context=".OptionsActivity">
 
     <View
-        android:id="@+id/view"
-        android:layout_width="325dp"
-        android:layout_height="506dp"
-        android:layout_marginTop="114dp"
-        android:background="#FAE634"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/category2"
-        android:layout_width="298dp"
-        android:layout_height="43dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="Lore del juego"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category1" />
-
-    <CheckBox
-        android:id="@+id/category1"
-        android:layout_width="298dp"
-        android:layout_height="49dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="Campeones y habilidades"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryOpt" />
-
-    <View
         android:id="@+id/optionsTitleBackground"
         android:layout_width="396dp"
         android:layout_height="53dp"
@@ -73,76 +43,151 @@
         app:layout_constraintTop_toTopOf="@+id/optionsTitleBackground"
         app:srcCompat="@drawable/abc_vector_test" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="283dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="12dp"
-        android:max="9"
-        android:progress="9"
+    <View
+        android:id="@+id/view"
+        android:layout_width="325dp"
+        android:layout_height="528dp"
+        android:layout_marginTop="92dp"
+        android:background="#FAE634"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionN" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinnerTheme"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="13dp"
-        android:fontFamily="@font/friz_quadrata_bold"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/theme" />
-
-    <Switch
-        android:id="@+id/music"
+    <EditText
+        android:id="@+id/insertUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="MÚSICA"
-        android:textSize="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/category2" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <TextView
-        android:id="@+id/questionN"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/friz_quadrata"
-        android:text="NÚMERO DE PREGUNTAS"
+        android:text="NOMBRE DE USUARIO"
         android:textColor="#000000"
-        android:textSize="18dp"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/music" />
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
     <TextView
         android:id="@+id/categoryOpt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="144dp"
         android:fontFamily="@font/friz_quadrata"
         android:text="CATEGORÍAS"
         android:textColor="#000000"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTheme" />
-
-    <TextView
-        android:id="@+id/theme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/friz_quadrata"
-        android:text="TEMA"
-        android:textColor="#000000"
-        android:textSize="18dp"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <CheckBox
+        android:id="@+id/category1"
+        android:layout_width="298dp"
+        android:layout_height="49dp"
+        android:fontFamily="@font/friz_quadrata"
+        android:text="Campeones y habilidades"
+        android:textColorLink="#165F98"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryOpt" />
+
+    <CheckBox
+        android:id="@+id/category2"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:fontFamily="@font/friz_quadrata"
+        android:text="Lore del juego"
+        android:textColorLink="#165F98"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category1" />
+
+    <CheckBox
+        android:id="@+id/category3"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:fontFamily="@font/friz_quadrata"
+        android:text="Objetos"
+        android:textColorLink="#165F98"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category2" />
+
+    <CheckBox
+        android:id="@+id/category4"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:fontFamily="@font/friz_quadrata"
+        android:text="Esports"
+        android:textColorLink="#2B2B2B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category3" />
+
+    <TextView
+        android:id="@+id/questionN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/friz_quadrata"
+        android:text="NÚMERO DE PREGUNTAS"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/category4" />
+
+    <TextView
+        android:id="@+id/questions"
+        android:layout_width="69dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/friz_quadrata_bold"
+        android:text="18"
+        android:textAlignment="center"
+        android:textColor="#2C2C2C"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/questionN" />
+
+    <ImageButton
+        android:id="@+id/subsQuestion"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="4dp"
+        android:background="#00000000"
+        android:rotation="90"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/questions"
+        app:layout_constraintTop_toBottomOf="@+id/questionN"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <ImageButton
+        android:id="@+id/addQuestion"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="36dp"
+        android:background="#00000000"
+        android:rotation="-90"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/questions"
+        app:layout_constraintTop_toBottomOf="@+id/questionN"
+        app:srcCompat="@android:drawable/arrow_down_float" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -15,20 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-// Este fragmento gestiona las preguntas que tienen imagenes en el enunciado (tipo 2).
-
-public class ImageQuestionFragment extends Fragment {
+public class VideoQuestionFragment extends Fragment {
     List<Button> options = new ArrayList<Button>();
     TextView questionBox;
-    ImageView questionImage;
-    public ImageQuestionFragment() {
+    VideoView questionVideo;
+
+    public VideoQuestionFragment() {
         // Required empty public constructor
     }
 
@@ -41,7 +38,7 @@ public class ImageQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_image_question, container, false);
+        return inflater.inflate(R.layout.fragment_video_question, container, false);
     }
 
     @Override
@@ -51,26 +48,26 @@ public class ImageQuestionFragment extends Fragment {
         // Se buscan los elementos del fragmento y se pasan a la actividad para poder ejecutar el
         // método questionwriter.
         questionBox = (TextView) getView().findViewById(R.id.question);
-        questionImage = (ImageView) getView().findViewById(R.id.photo);
+        questionVideo = (VideoView) getView().findViewById(R.id.video);
         options.add((Button) getView().findViewById(R.id.option1));
         options.add((Button) getView().findViewById(R.id.option2));
         options.add((Button) getView().findViewById(R.id.option3));
         options.add((Button) getView().findViewById(R.id.option4));
 
-        for (int i = 0; i<4;i++) {
+        for (int i = 0; i < 4; i++) {
             options.get(i).setOnClickListener(new View.OnClickListener() {
                 // Aquí se ha implementado una animación para darle feedback visual al usuario
                 // dependiendo de si su respuesta es correcta o no.
                 @Override
                 public void onClick(View v) {
-                    for (View button : options){
+                    for (View button : options) {
                         button.setOnClickListener(null);
                     }
                     ValueAnimator valueanimator;
-                    if(v.getTag().equals(0)){
-                        valueanimator = ObjectAnimator.ofInt(v,"backgroundColor", Color.parseColor("#FAE634"),Color.parseColor("#60BA1D"));
-                    }else{
-                        valueanimator = ObjectAnimator.ofInt(v,"backgroundColor", Color.parseColor("#FAE634"),Color.parseColor("#C62B38"));
+                    if (v.getTag().equals(0)) {
+                        valueanimator = ObjectAnimator.ofInt(v, "backgroundColor", Color.parseColor("#FAE634"), Color.parseColor("#60BA1D"));
+                    } else {
+                        valueanimator = ObjectAnimator.ofInt(v, "backgroundColor", Color.parseColor("#FAE634"), Color.parseColor("#C62B38"));
                     }
 
                     valueanimator.setDuration(1000);
@@ -103,7 +100,7 @@ public class ImageQuestionFragment extends Fragment {
 
                             }
                         });
-                    }else {
+                    } else {
                         valueanimator.addListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animation) {
@@ -134,7 +131,7 @@ public class ImageQuestionFragment extends Fragment {
         // el método questionwriter.
         ((GameActivity) requireActivity()).receiveButtons(options);
         ((GameActivity) getActivity()).receiveQuestion(questionBox);
-        ((GameActivity) getActivity()).receiveQuestionImage(questionImage);
+        ((GameActivity) getActivity()).receiveQuestionVideo(questionVideo);
         ((GameActivity) getActivity()).questionWriter();
     }
 }

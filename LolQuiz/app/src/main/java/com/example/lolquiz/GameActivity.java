@@ -7,8 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+
 import android.database.Cursor;
+import android.content.SharedPreferences;
+
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,19 +32,26 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
+    private DbManager dbManager;
     private  int questionCounter = 0;
     private  int correctCounter = 0;
+    private int questionNumber;
     List<Button> options = new ArrayList<>();
     List<ImageButton> imageOptions = new ArrayList<>();
     List<Integer> alreadyUsed = new ArrayList<>();
     TextView category;
+    TextView questionCount;
+    TextView correctCount;
     View categoryBackground;
     List<List<String>> questions = new ArrayList<>();
     TextView questionBox;
     ImageView questionImg;
+    VideoView questionVid;
     FragmentManager fragmentController;
     FragmentTransaction transaction;
-    private DbManager dbManager;
+    Context context;
+    SharedPreferences sharedPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,13 +123,20 @@ public class GameActivity extends AppCompatActivity {
         */
 
         // Inicializamos los parámetros de la clase que usaremos durante la actividad.
+        context = this;
         InputStream is = getResources().openRawResource(R.raw.preguntas);
+
+        sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        questionNumber = Integer.parseInt(sharedPref.getString("questions", "5"));
 
         questions = new ArrayList<>();
         alreadyUsed = new ArrayList<>();
 
-        category = (TextView) findViewById(R.id.category);
-        categoryBackground = findViewById(R.id.categoryBackground);
+        category = (TextView) findViewById(R.id.ranking);
+        categoryBackground = findViewById(R.id.rankingBackground);
+
+        questionCount = (TextView) findViewById(R.id.questionCount);
+        correctCount = (TextView) findViewById(R.id.correctCount);
 
         ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener(){
@@ -163,13 +182,13 @@ public class GameActivity extends AppCompatActivity {
         // Esta función genera un indice aleatorio que selecciona la próxima pregunta a mostrar de
         // las que están contenidas en el ArrayList questions.
         Random random = new Random();
-        int questionTitle = random.nextInt(10);
+        int questionTitle = random.nextInt(questionNumber);
 
         // Además el índice seleccionado se añade a un array de preguntas usadas para que no pueda
         // volver a salir durante la partida y se comprueba dicho array para que asegurarnos de que
         // la pregunta no ha salido.
         while (alreadyUsed.contains(questionTitle)) {
-            questionTitle = random.nextInt(10);
+            questionTitle = random.nextInt(questionNumber);
         }
 
         alreadyUsed.add(questionTitle);
@@ -195,6 +214,11 @@ public class GameActivity extends AppCompatActivity {
                 transaction.replace(R.id.frameLayout, fragment2);
                 transaction.commit();
                 break;
+            case 3:
+                VideoQuestionFragment fragment3 = new VideoQuestionFragment();
+                transaction.replace(R.id.frameLayout,fragment3);
+                transaction.commit();
+                break;
         }
     }
 
@@ -203,6 +227,8 @@ public class GameActivity extends AppCompatActivity {
         // y los elementos de la pantalla y rellenarlos con los contenidos de la pregunta (enunciado,
         // respuestas, imágenes, color de la categoría, nombre de la categoría...).
         // Los botones en los que se coloca cada respuesta se seleccionan también de forma aleatoria.
+        updateCounts();
+
         Random random = new Random();
 
         // Aquí se asigna el enunciado de la pregunta.
@@ -217,11 +243,18 @@ public class GameActivity extends AppCompatActivity {
 
         String questionType = questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(1);
         switch (Integer.parseInt(""+questionType.substring(0,1))){
-            case 2:
+            case 3:
+                // Las preguntas de tipo 3 cambian los mismos elementos que las de tipo 0 con la
+                // diferencia de que las de tipo 3 necesitan además un video para el enunciado.
+                String videoPath = "android.resource://" + getPackageName() + "/" + getVideoId(this, questionType.substring(1));
+                Uri uri = Uri.parse(videoPath);
+                questionVid.setVideoURI(uri);
+            case 0:
                 // Las preguntas de tipo 2 cambian los mismos elementos que las de tipo 0 con la
                 // diferencia de que las de tipo 2 necesitan además una imagen para el enunciado.
-                questionImg.setImageResource(getImageId(this, questionType.substring(1)));
-            case 0:
+                if(Integer.parseInt(""+questionType.substring(0,1))==2) {
+                    questionImg.setImageResource(getImageId(this, questionType.substring(1)));
+                }
                 // Las preguntas de tipo 0 son las que no incluyen imágenes ni en los botones ni en
                 // las respuestas. Solo cambian el contenido de texto de los enuncaidos y los botones.
                 options.get(buttonIndex).setText(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(3));
@@ -281,7 +314,7 @@ public class GameActivity extends AppCompatActivity {
             correctCounter ++;
         }
 
-        if(questionCounter == questions.size()){
+        if(questionCounter == questionNumber){
             next = false;
         }
 
@@ -303,9 +336,16 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void updateCounts(){
+        questionCount.setText(questionCounter+"/"+questionNumber);
+        correctCount.setText(""+correctCounter);
+    }
+
     public void receiveQuestion (TextView question){        questionBox = question;    }
 
     public void receiveQuestionImage (ImageView questionImage){        questionImg = questionImage;    }
+
+    public void receiveQuestionVideo (VideoView questionVideo){        questionVid = questionVideo;    }
 
     public void receiveButtons (List<Button> receivedOptions){
         options = receivedOptions;
@@ -322,6 +362,7 @@ public class GameActivity extends AppCompatActivity {
     public static int getImageId(Context context, String imageName) {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
     }
+
 
     // mediante el cursor que se creara con el get entries , se introducirá en el arrayList questións. De esa manera la aplicación seguirá funcionando igual.
     public void setQuestions(Cursor entries){
@@ -349,6 +390,10 @@ public class GameActivity extends AppCompatActivity {
             questions.add(new ArrayList<>(aux)); //add the item
             entries.moveToNext();
         }
+
+    public static int getVideoId(Context context, String videoName) {
+        return context.getResources().getIdentifier("res/" + videoName, null, context.getPackageName());
+
     }
     // ----------------------------------------------------------------------------------------------
 }
