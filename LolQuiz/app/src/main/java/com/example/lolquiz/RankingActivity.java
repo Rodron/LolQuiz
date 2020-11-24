@@ -66,7 +66,6 @@ public class RankingActivity extends AppCompatActivity {
         }
         else{
             noScoreStored.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "No se han encontrado puntuaciones almacenadas.", Toast.LENGTH_SHORT).show();
         }
 
         ImageButton back = (ImageButton) findViewById(R.id.back);

@@ -98,7 +98,7 @@ public class ImageAnswersQuestionsFragment extends Fragment {
                     // Con este if se establece la opción a realizar tras completar la animación,
                     // mostrar una nueva pregunta o ir a la pantalla del resultados. Esto se decide
                     // en base al return proporcionado por el método checkAnswer.
-                    if (((GameActivity) Objects.requireNonNull(getActivity())).checkAnswer(v)) {
+                    if (((GameActivity) requireActivity()).checkAnswer(v)) {
                         valueanimator.addListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animation) {
@@ -149,7 +149,7 @@ public class ImageAnswersQuestionsFragment extends Fragment {
 
         // Se pasan a la actividad los elementos del fragmento para posteriormente proceder a ejecutar
         // el método questionwriter.
-        ((GameActivity) Objects.requireNonNull(getActivity())).receiveImageButtons(options);
+        ((GameActivity) requireActivity()).receiveImageButtons(options);
         ((GameActivity) getActivity()).receiveQuestion(questionBox);
         ((GameActivity) getActivity()).questionWriter();
     }

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
     List<List<String>> questions = new ArrayList<>();
     TextView questionBox;
     ImageView questionImg;
+    VideoView questionVid;
     FragmentManager fragmentController;
     FragmentTransaction transaction;
     Context context;
@@ -140,6 +143,11 @@ public class GameActivity extends AppCompatActivity {
                 transaction.replace(R.id.frameLayout, fragment2);
                 transaction.commit();
                 break;
+            case 3:
+                VideoQuestionFragment fragment3 = new VideoQuestionFragment();
+                transaction.replace(R.id.frameLayout,fragment3);
+                transaction.commit();
+                break;
         }
     }
 
@@ -164,11 +172,18 @@ public class GameActivity extends AppCompatActivity {
 
         String questionType = questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(1);
         switch (Integer.parseInt(""+questionType.substring(0,1))){
-            case 2:
+            case 3:
+                // Las preguntas de tipo 3 cambian los mismos elementos que las de tipo 0 con la
+                // diferencia de que las de tipo 3 necesitan además un video para el enunciado.
+                String videoPath = "android.resource://" + getPackageName() + "/" + getVideoId(this, questionType.substring(1));
+                Uri uri = Uri.parse(videoPath);
+                questionVid.setVideoURI(uri);
+            case 0:
                 // Las preguntas de tipo 2 cambian los mismos elementos que las de tipo 0 con la
                 // diferencia de que las de tipo 2 necesitan además una imagen para el enunciado.
-                questionImg.setImageResource(getImageId(this, questionType.substring(1)));
-            case 0:
+                if(Integer.parseInt(""+questionType.substring(0,1))==2) {
+                    questionImg.setImageResource(getImageId(this, questionType.substring(1)));
+                }
                 // Las preguntas de tipo 0 son las que no incluyen imágenes ni en los botones ni en
                 // las respuestas. Solo cambian el contenido de texto de los enuncaidos y los botones.
                 options.get(buttonIndex).setText(questions.get(alreadyUsed.get(alreadyUsed.size()-1)).get(3));
@@ -259,6 +274,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void receiveQuestionImage (ImageView questionImage){        questionImg = questionImage;    }
 
+    public void receiveQuestionVideo (VideoView questionVideo){        questionVid = questionVideo;    }
+
     public void receiveButtons (List<Button> receivedOptions){
         options = receivedOptions;
     }
@@ -273,6 +290,10 @@ public class GameActivity extends AppCompatActivity {
 
     public static int getImageId(Context context, String imageName) {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
+    }
+
+    public static int getVideoId(Context context, String videoName) {
+        return context.getResources().getIdentifier("res/" + videoName, null, context.getPackageName());
     }
     // ----------------------------------------------------------------------------------------------
 }
