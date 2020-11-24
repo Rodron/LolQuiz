@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -33,9 +34,13 @@ public class RankingActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate, Started.");
 
         ListView mListView = (ListView) findViewById(R.id.scoreList);
+        TextView noScoreStored = (TextView) findViewById(R.id.noScoreStored);
+
+        boolean scoreFound = false;
 
         InputStream is = getResources().openRawResource(R.raw.ranking);
         ArrayList<Userscore> userscoreList = new ArrayList<>();
+
 
         try{
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -43,6 +48,8 @@ public class RankingActivity extends AppCompatActivity {
             String [] scores = new String[3];
 
             while ((line = br.readLine()) != null) {
+                if(!scoreFound)
+                    scoreFound = true;
                 scores = line.split("-\"-");
                 userscoreList.add(new Userscore(scores[0], scores[1], scores[2]));
             }
@@ -52,9 +59,15 @@ public class RankingActivity extends AppCompatActivity {
         catch (IOException e) {
             Toast.makeText(this, "Error al leer el archivo de puntuaciones", Toast.LENGTH_SHORT).show();
         }
-
-        UserscoreListAdapter adapter = new UserscoreListAdapter(this, R.layout.adapter_view_layout, userscoreList);
-        mListView.setAdapter(adapter);
+        if(scoreFound) {
+            UserscoreListAdapter adapter = new UserscoreListAdapter(this, R.layout.adapter_view_layout, userscoreList);
+            mListView.setAdapter(adapter);
+            noScoreStored.setVisibility(View.INVISIBLE);
+        }
+        else{
+            noScoreStored.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "No se han encontrado puntuaciones almacenadas.", Toast.LENGTH_SHORT).show();
+        }
 
         ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener(){

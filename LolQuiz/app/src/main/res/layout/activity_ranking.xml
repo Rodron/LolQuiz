@@ -8,6 +8,33 @@
     android:fadingEdgeLength="@dimen/material_emphasis_high_type"
     tools:context=".RankingActivity">
 
+    <ListView
+        android:id="@+id/scoreList"
+        android:layout_width="367dp"
+        android:layout_height="550dp"
+        android:layout_marginTop="3dp"
+        android:background="#195988"
+        android:dividerHeight="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rankingBackground2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/noScoreStored"
+        android:layout_width="253dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="172dp"
+        android:fontFamily="@font/friz_quadrata_bold"
+        android:text="No existe ninguna puntuación almacenada."
+        android:textAlignment="center"
+        android:textColor="#DDDDDD"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/scoreList"
+        app:layout_constraintStart_toStartOf="@+id/rankingBackground2"
+        app:layout_constraintTop_toBottomOf="@+id/rankingBackground2" />
+
     <View
         android:id="@+id/rankingBackground"
         android:layout_width="396dp"
@@ -30,7 +57,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ranking2"
+        android:id="@+id/user"
         android:layout_width="89dp"
         android:layout_height="32dp"
         android:layout_marginStart="20dp"
@@ -44,7 +71,7 @@
         app:layout_constraintTop_toTopOf="@+id/rankingBackground2" />
 
     <TextView
-        android:id="@+id/ranking3"
+        android:id="@+id/score"
         android:layout_width="117dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -82,15 +109,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/rankingBackground" />
-
-    <ListView
-        android:id="@+id/scoreList"
-        android:layout_width="367dp"
-        android:layout_height="550dp"
-        android:layout_marginTop="3dp"
-        android:dividerHeight="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rankingBackground2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
