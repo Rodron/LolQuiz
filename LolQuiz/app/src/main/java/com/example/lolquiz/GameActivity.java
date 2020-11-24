@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -38,11 +39,76 @@ public class GameActivity extends AppCompatActivity {
     ImageView questionImg;
     FragmentManager fragmentController;
     FragmentTransaction transaction;
+    private DbManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        dbManager = new DbManager(this);
+        dbManager.deleteAll();
+        dbManager.insertEntry("C","0","¿Cuál de estas habilidades no pertenece a Vel'Koz?",
+                "Rayo de la muerte",
+                "Grieta del vacío",
+                "Fisión de plasma",
+                "Perturbación tectónica");
+        dbManager.insertEntry("C", "1","¿Cuál de estos campeones es más antiguo?",
+                "veigar",
+                "kassadin",
+                "mundo",
+                "lux");
+        dbManager.insertEntry("C","0","A fecha de 24/10/2020 ¿cuál de estos campeones tiene un mayor cooldown en su ultimate al nivel 6 (sin aplicar items o runas de CDR)?",
+                "Ryze",
+                "Karthus",
+                "Twisted Fate",
+                "Shen");
+        dbManager.insertEntry("C","0","A fecha de 24/10/2020 ¿cuál de estos campeones cuenta con el mayor número de skins?",
+                "Ezreal",
+                "Ornn",
+                "Miss Fortune",
+                "Lux");
+        dbManager.insertEntry("C","1","¿Cuál de estas habilidades inmoviliza al campeón enemigo durante más tiempo (todas las habilidades están a nivel 1)?",
+                "burbujador",
+                "hechizoos",
+                "llamaradasol",
+                "cadenaset");
+        dbManager.insertEntry("L","2zaun","¿Qué personaje no proviene de esta región de Runaterra?",
+                "Ziggs",
+                "Dr. Mundo",
+                "Singed",
+                "Viktor");
+        dbManager.insertEntry("L","1","¿Cuál de estos personajes no es un darkin?",
+                "diana",
+                "aatrox",
+                "varus",
+                "rhaast");
+        dbManager.insertEntry("L","0","¿Cuál de estos personajes no pertenece a la Orden Kinkou?",
+                "Yasuo",
+                "Akali",
+                "Kennen",
+                "Shen");
+        dbManager.insertEntry("L","0","¿Cuál de estos pares de personajes son hermanos?",
+                "Lux y Garen",
+                "Xayah y Rakan",
+                "Sylas y Ezreal",
+                "Teemo y Corki");
+        dbManager.insertEntry("L","0","¿Quién es el mentor/la mentora de Wukong?",
+                "Maestro Yi",
+                "Lee Sin",
+                "Akali",
+                "Yasuo");
+        /*dbManager.insertEntry("I","3","", "", "", "", "");
+        dbManager.insertEntry("I","3","", "", "", "", "");
+        dbManager.insertEntry("I","3","", "", "", "", "");
+        dbManager.insertEntry("I","3","", "", "", "", "");
+        dbManager.insertEntry("I","3","", "", "", "", "");
+        dbManager.insertEntry("E","3","", "", "", "", "");
+        dbManager.insertEntry("E","3","", "", "", "", "");
+        dbManager.insertEntry("E","3","", "", "", "", "");
+        dbManager.insertEntry("E","3","", "", "", "", "");
+        dbManager.insertEntry("E","3","", "", "", "", "");
+        */
 
         // Inicializamos los parámetros de la clase que usaremos durante la actividad.
         InputStream is = getResources().openRawResource(R.raw.preguntas);
@@ -61,8 +127,10 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        setQuestions(dbManager.getEntries());
         // Procedemos a leer el fichero txt que contiene las preguntas y guardarlas en el ArrayList
         // questions.
+/*
         try{
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
@@ -83,7 +151,7 @@ public class GameActivity extends AppCompatActivity {
         }
         catch (IOException e) {
             Toast.makeText(this, "Error al leer el archivo de preguntas", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         // Se llama por primera vez al método questiongenerator que iniciará el bucle del juego
         // seleccionando la primera pregunta
@@ -253,6 +321,34 @@ public class GameActivity extends AppCompatActivity {
 
     public static int getImageId(Context context, String imageName) {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
+    }
+
+    // mediante el cursor que se creara con el get entries , se introducirá en el arrayList questións. De esa manera la aplicación seguirá funcionando igual.
+    public void setQuestions(Cursor entries){
+
+        List<String> aux = new ArrayList<String>();
+        String saux;
+        entries.moveToFirst();
+        while(!entries.isAfterLast()) {
+            aux.clear();
+
+            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_CATEGORY));
+            aux.add(saux);
+            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_FRAGMENT));
+            aux.add(saux);
+            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_TITLE));
+            aux.add(saux);
+            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER1));
+            aux.add(saux);
+            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER2));
+            aux.add(saux);
+            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER3));
+            aux.add(saux);
+            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER4));
+            aux.add(saux);
+            questions.add(new ArrayList<>(aux)); //add the item
+            entries.moveToNext();
+        }
     }
     // ----------------------------------------------------------------------------------------------
 }
