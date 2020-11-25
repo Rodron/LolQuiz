@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        sharedPref = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+
         Button options =  (Button)  findViewById(R.id.optionsButton);
         options.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +54,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void newGame(){
-        Intent intent = new Intent(this, GameActivity.class);
+        String username = sharedPref.getString("user", "Anónimo");
+        Intent intent;
+        if(!username.equals("Anónimo")) {
+            intent = new Intent(this, GameActivity.class);
+        }
+        else {
+            intent = new Intent(this, NoUsernameActivity.class);
+        }
         startActivity(intent);
     }
 

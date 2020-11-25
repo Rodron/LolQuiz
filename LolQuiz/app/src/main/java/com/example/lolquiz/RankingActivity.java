@@ -38,11 +38,10 @@ public class RankingActivity extends AppCompatActivity {
 
         boolean scoreFound = false;
 
-        InputStream is = getResources().openRawResource(R.raw.ranking);
         ArrayList<Userscore> userscoreList = new ArrayList<>();
 
-
         try{
+            InputStream is = openFileInput("ranking.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
             String [] scores = new String[3];
@@ -50,14 +49,17 @@ public class RankingActivity extends AppCompatActivity {
             while ((line = br.readLine()) != null) {
                 if(!scoreFound)
                     scoreFound = true;
-                scores = line.split("-\"-");
+                scores = line.split("---");
                 userscoreList.add(new Userscore(scores[0], scores[1], scores[2]));
             }
 
             br.close();
+            is.close();
         }
         catch (IOException e) {
-            Toast.makeText(this, "Error al leer el archivo de puntuaciones", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            noScoreStored.setVisibility(View.VISIBLE);
+            //Toast.makeText(this, "Error al leer el archivo de puntuaciones", Toast.LENGTH_SHORT).show();
         }
         if(scoreFound) {
             UserscoreListAdapter adapter = new UserscoreListAdapter(this, R.layout.adapter_view_layout, userscoreList);

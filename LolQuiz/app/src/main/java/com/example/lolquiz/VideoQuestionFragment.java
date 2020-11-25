@@ -10,10 +10,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -23,6 +25,7 @@ import java.util.List;
 public class VideoQuestionFragment extends Fragment {
     List<Button> options = new ArrayList<Button>();
     TextView questionBox;
+    TextView videoMsg;
     VideoView questionVideo;
 
     public VideoQuestionFragment() {
@@ -49,6 +52,7 @@ public class VideoQuestionFragment extends Fragment {
         // método questionwriter.
         questionBox = (TextView) getView().findViewById(R.id.question);
         questionVideo = (VideoView) getView().findViewById(R.id.video);
+        videoMsg = (TextView) getView().findViewById(R.id.videoMsg);
         options.add((Button) getView().findViewById(R.id.option1));
         options.add((Button) getView().findViewById(R.id.option2));
         options.add((Button) getView().findViewById(R.id.option3));
@@ -131,7 +135,7 @@ public class VideoQuestionFragment extends Fragment {
         // el método questionwriter.
         ((GameActivity) requireActivity()).receiveButtons(options);
         ((GameActivity) getActivity()).receiveQuestion(questionBox);
-        ((GameActivity) getActivity()).receiveQuestionVideo(questionVideo);
+        ((GameActivity) getActivity()).receiveQuestionVideo(questionVideo, videoMsg);
         ((GameActivity) getActivity()).questionWriter();
     }
 }

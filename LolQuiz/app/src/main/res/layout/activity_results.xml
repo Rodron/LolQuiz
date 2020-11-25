@@ -47,7 +47,7 @@
     <View
         android:id="@+id/messageBackground"
         android:layout_width="363dp"
-        android:layout_height="90dp"
+        android:layout_height="95dp"
         android:background="#224163"
         app:backgroundTint="#EAE634"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
     <View
         android:id="@+id/messageBackgroundBorder"
         android:layout_width="360dp"
-        android:layout_height="90dp"
+        android:layout_height="95dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/border"
         app:backgroundTint="#EAE634"
@@ -69,15 +69,15 @@
     <TextView
         android:id="@+id/message"
         android:layout_width="349dp"
-        android:layout_height="76dp"
+        android:layout_height="81dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/border"
         android:fontFamily="@font/friz_quadrata_bold"
-        android:text="Has acertado 3 de 10 preguntas."
+        android:text="Has acertado  4 de  20  preguntas.\n Has conseguido 2340  puntos."
         android:textAlignment="center"
         android:textColor="#DDDDDD"
         android:textColorLink="#000000"
-        android:textSize="27sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/messageBackgroundBorder" />

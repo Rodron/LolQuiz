@@ -14,18 +14,17 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -36,14 +35,18 @@ public class GameActivity extends AppCompatActivity {
     private  int questionCounter = 0;
     private  int correctCounter = 0;
     private int questionNumber;
+    private int questionPoolLimit;
+    private String categCode;
     List<Button> options = new ArrayList<>();
     List<ImageButton> imageOptions = new ArrayList<>();
     List<Integer> alreadyUsed = new ArrayList<>();
     TextView category;
     TextView questionCount;
     TextView correctCount;
+    TextView videoMessage;
     View categoryBackground;
     List<List<String>> questions = new ArrayList<>();
+    List<String> categs;
     TextView questionBox;
     ImageView questionImg;
     VideoView questionVid;
@@ -60,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
 
         dbManager = new DbManager(this);
         dbManager.deleteAll();
+
         dbManager.insertEntry("C","0","¿Cuál de estas habilidades no pertenece a Vel'Koz?",
                 "Rayo de la muerte",
                 "Grieta del vacío",
@@ -110,17 +114,17 @@ public class GameActivity extends AppCompatActivity {
                 "Lee Sin",
                 "Akali",
                 "Yasuo");
-        /*dbManager.insertEntry("I","3","", "", "", "", "");
-        dbManager.insertEntry("I","3","", "", "", "", "");
-        dbManager.insertEntry("I","3","", "", "", "", "");
-        dbManager.insertEntry("I","3","", "", "", "", "");
-        dbManager.insertEntry("I","3","", "", "", "", "");
-        dbManager.insertEntry("E","3","", "", "", "", "");
-        dbManager.insertEntry("E","3","", "", "", "", "");
-        dbManager.insertEntry("E","3","", "", "", "", "");
-        dbManager.insertEntry("E","3","", "", "", "", "");
-        dbManager.insertEntry("E","3","", "", "", "", "");
-        */
+        dbManager.insertEntry("O","3fakerwhat","¿En qué año ocurrió esta mítica jugada?", "2013", "2011", "2009", "2015");
+        dbManager.insertEntry("O","3zhonyas","¿Que objeto se ha activado en este video?", "Reloj de Arena de Zhonya", "Quimiotanque Turbo", "Chupasangre", "Presagio de Randuin");
+        dbManager.insertEntry("O","3velo","¿A que objeto le pertenece este escudo?", "Velo del Hada de la Muerte", "Velo de la Noche", "Armadura de Warmog", "Fuerza de la Naturaleza");
+        dbManager.insertEntry("O","3randuin","El objeto mostrado en el video permite...", "Reducir daño y ralentizar", "Aumentar daño", "Aturdir", "Curar");
+        dbManager.insertEntry("O","3flash","¿Cómo se llama el siguiente hechizo de invocador?", "Destello", "Extenuación", "Aplastar", "Prender");
+        dbManager.insertEntry("E","3heraldo","¿En qué minuto ocurre esto?", "19 : 45", "17 : 20", "16 : 50", "18 : 30");
+        dbManager.insertEntry("E","3peke","¿A qué temporada pertenece esta partida?", "1", "5", "8", "2");
+        dbManager.insertEntry("E","3robots","¿A qué fase del mundial pertenece este clip?", "Grupos", "Cuartos", "Semifinal", "Final");
+        dbManager.insertEntry("E","3insec","¿Con el nombre de qué jugador fue bautizada la siguiente mecánica?", "InSec", "Bjergsen", "Faker", "Madllife");
+        dbManager.insertEntry("E","3drake","¿Qué equipos jugaban en esta final de Worlds?", "SKT y SSG", "FNC y SKT", "TSM y C9", "RNG y FLW");
+
 
         // Inicializamos los parámetros de la clase que usaremos durante la actividad.
         context = this;
@@ -128,6 +132,30 @@ public class GameActivity extends AppCompatActivity {
 
         sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         questionNumber = Integer.parseInt(sharedPref.getString("questions", "5"));
+        categCode = sharedPref.getString("categories", "1111");
+
+        categs = new ArrayList<>();
+
+        for(int i = 0; i < 4; i++){
+            if(categCode.charAt(i)-'0' == 1){
+                switch (i){
+                    case 0:
+                        categs.add("C");
+                        break;
+                    case 1:
+                        categs.add("L");
+                        break;
+                    case 2:
+                        categs.add("O");
+                        break;
+                    case 3:
+                        categs.add("E");
+                        break;
+                }
+            }
+        }
+
+        questionPoolLimit = categs.size()*5;
 
         questions = new ArrayList<>();
         alreadyUsed = new ArrayList<>();
@@ -147,33 +175,6 @@ public class GameActivity extends AppCompatActivity {
         });
 
         setQuestions(dbManager.getEntries());
-        // Procedemos a leer el fichero txt que contiene las preguntas y guardarlas en el ArrayList
-        // questions.
-/*
-        try{
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String line;
-            List<String> aux = new ArrayList<String>();
-
-            for (int i = 0; (line = br.readLine()) != null; i++) {
-                if(i%7 == 0 && i/7>0){
-                    questions.add(new ArrayList<>(aux));
-                    aux.clear();
-                }
-                aux.add(line);
-            }
-
-            questions.add(new ArrayList<>(aux));
-            aux.clear();
-
-            br.close();
-        }
-        catch (IOException e) {
-            Toast.makeText(this, "Error al leer el archivo de preguntas", Toast.LENGTH_SHORT).show();
-        }*/
-
-        // Se llama por primera vez al método questiongenerator que iniciará el bucle del juego
-        // seleccionando la primera pregunta
         questionGenerator();
     }
 
@@ -182,13 +183,15 @@ public class GameActivity extends AppCompatActivity {
         // Esta función genera un indice aleatorio que selecciona la próxima pregunta a mostrar de
         // las que están contenidas en el ArrayList questions.
         Random random = new Random();
-        int questionTitle = random.nextInt(questionNumber);
+
+        int questionTitle = random.nextInt(questionPoolLimit);
 
         // Además el índice seleccionado se añade a un array de preguntas usadas para que no pueda
         // volver a salir durante la partida y se comprueba dicho array para que asegurarnos de que
         // la pregunta no ha salido.
+        //|| !categs.contains(questions.get(questionTitle).get(0))
         while (alreadyUsed.contains(questionTitle)) {
-            questionTitle = random.nextInt(questionNumber);
+            questionTitle = random.nextInt(questionPoolLimit);
         }
 
         alreadyUsed.add(questionTitle);
@@ -249,6 +252,17 @@ public class GameActivity extends AppCompatActivity {
                 String videoPath = "android.resource://" + getPackageName() + "/" + getVideoId(this, questionType.substring(1));
                 Uri uri = Uri.parse(videoPath);
                 questionVid.setVideoURI(uri);
+                questionVid.setOnTouchListener(new View.OnTouchListener(){
+                    @SuppressLint("ClickableViewAccessibility")
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        videoMessage.setVisibility(View.INVISIBLE);
+                        return false;
+                    }
+                });
+                MediaController mediaController = new MediaController(this);
+                questionVid.setMediaController(new MediaController(this));
+            case 2:
             case 0:
                 // Las preguntas de tipo 2 cambian los mismos elementos que las de tipo 0 con la
                 // diferencia de que las de tipo 2 necesitan además una imagen para el enunciado.
@@ -298,6 +312,14 @@ public class GameActivity extends AppCompatActivity {
                 category.setText("Lore del juego");
                 categoryBackground.setBackgroundColor(Color.parseColor("#1C9E71"));
                 break;
+            case "O":
+                category.setText("Objetos y mecánicas");
+                categoryBackground.setBackgroundColor(Color.parseColor("#CC7D37"));
+                break;
+            case "E":
+                category.setText("Esports");
+                categoryBackground.setBackgroundColor(Color.parseColor("#AA3A3A"));
+                break;
         }
     }
 
@@ -345,7 +367,10 @@ public class GameActivity extends AppCompatActivity {
 
     public void receiveQuestionImage (ImageView questionImage){        questionImg = questionImage;    }
 
-    public void receiveQuestionVideo (VideoView questionVideo){        questionVid = questionVideo;    }
+    public void receiveQuestionVideo (VideoView questionVideo, TextView videoMsg){
+        questionVid = questionVideo;
+        videoMessage = videoMsg;
+    }
 
     public void receiveButtons (List<Button> receivedOptions){
         options = receivedOptions;
@@ -363,37 +388,45 @@ public class GameActivity extends AppCompatActivity {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
     }
 
+    public static int getVideoId(Context context, String videoName){
+        return context.getResources().getIdentifier("raw/" + videoName, null, context.getPackageName());
+    }
 
-    // mediante el cursor que se creara con el get entries , se introducirá en el arrayList questións. De esa manera la aplicación seguirá funcionando igual.
-    public void setQuestions(Cursor entries){
+    // ----------------------------------------------------------------------------------------------
+    // Mediante el cursor que se creara con el get entries , se introducirá en el arrayList questions.
+    // De esa manera la aplicación seguirá funcionando de forma idéntica a la primera versión.
+    public void setQuestions(Cursor entries) {
 
         List<String> aux = new ArrayList<String>();
         String saux;
         entries.moveToFirst();
-        while(!entries.isAfterLast()) {
+        while (!entries.isAfterLast()) {
             aux.clear();
 
             saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_CATEGORY));
-            aux.add(saux);
-            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_FRAGMENT));
-            aux.add(saux);
-            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_TITLE));
-            aux.add(saux);
-            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER1));
-            aux.add(saux);
-            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER2));
-            aux.add(saux);
-            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER3));
-            aux.add(saux);
-            saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER4));
-            aux.add(saux);
-            questions.add(new ArrayList<>(aux)); //add the item
+            if(categs.contains(saux)){
+                aux.add(saux);
+                saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_FRAGMENT));
+                aux.add(saux);
+                saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_TITLE));
+                aux.add(saux);
+                saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER1));
+                aux.add(saux);
+                saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER2));
+                aux.add(saux);
+                saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER3));
+                aux.add(saux);
+                saux = entries.getString(entries.getColumnIndex(DbContract.DbEntry.COLUMN_NAME_ANSWER4));
+                aux.add(saux);
+                questions.add(new ArrayList<>(aux)); //add the item
+            }
             entries.moveToNext();
         }
-
-    public static int getVideoId(Context context, String videoName) {
-        return context.getResources().getIdentifier("res/" + videoName, null, context.getPackageName());
-
     }
-    // ----------------------------------------------------------------------------------------------
+
+
+    @Override
+    public void onBackPressed() {
+        goToMenu();
+    }
 }
